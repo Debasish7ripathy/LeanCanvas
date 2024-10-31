@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lean Canvas - 16:9 Colored</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .print-container {
+            background: white;
+            width: 1200px;
+            height: 675px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        #lean-canvas {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: 70% 30%;
+            gap: 8px;
+            padding: 16px;
+            background: white;
+        }
+
+        .section {
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 6px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        /* Problem Section - Soft Red */
+        .section.problem {
+            background: rgba(255, 99, 132, 0.1);
+        }
+        .section.problem h3 {
+            color: #FF6384;
+        }
+
+        /* Solution Section - Soft Blue */
+        .section.solution {
+            background: rgba(54, 162, 235, 0.1);
+        }
+        .section.solution h3 {
+            color: #36A2EB;
+        }
+
+        /* Value Proposition - Soft Purple */
+        .section.value {
+            background: rgba(153, 102, 255, 0.1);
+        }
+        .section.value h3 {
+            color: #9966FF;
+        }
+
+        /* Unfair Advantage - Soft Green */
+        .section.advantage {
+            background: rgba(75, 192, 192, 0.1);
+        }
+        .section.advantage h3 {
+            color: #4BC0C0;
+        }
+
+        /* Customer Segments - Soft Orange */
+        .section.segments {
+            background: rgba(255, 159, 64, 0.1);
+        }
+        .section.segments h3 {
+            color: #FF9F40;
+        }
+
+        /* Cost Structure - Soft Teal */
+        .section.costs {
+            background: rgba(0, 184, 148, 0.1);
+        }
+        .section.costs h3 {
+            color: #00B894;
+        }
+
+        /* Revenue Streams - Soft Yellow */
+        .section.revenue {
+            background: rgba(255, 206, 86, 0.1);
+        }
+        .section.revenue h3 {
+            color: #FFCE56;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .section h3 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .section textarea {
+            flex-grow: 1;
+            border: 1px solid rgba(0,0,0,0.1);
+            resize: none;
+            padding: 8px;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            min-height: 60px;
+            background: rgba(255,255,255,0.7);
+        }
+
+        .section textarea:focus {
+            outline: none;
+            background: white;
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #666;
+            margin: 4px 0;
+            font-style: italic;
+        }
+
+        .bottom-row {
+            grid-column: span 5;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .download-btn {
+            padding: 12px 24px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .download-btn:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        @media print {
+            .controls {
+                display: none;
+            }
+            body {
+                padding: 0;
+            }
+            .print-container {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button class="download-btn" onclick="downloadPDF()">Download as PDF</button>
+    </div>
+
+    <div class="print-container">
+        <div id="lean-canvas">
+            <div class="section problem">
+                <h3>PROBLEM</h3>
+                <textarea placeholder="List your top 3 problems"></textarea>
+                <div class="subtitle">Existing Alternatives:</div>
+                <textarea placeholder="List existing alternatives"></textarea>
+            </div>
+
+            <div class="section solution">
+                <h3>SOLUTION</h3>
+                <textarea placeholder="Outline possible solutions"></textarea>
+            </div>
+
+            <div class="section value">
+                <h3>UNIQUE VALUE PROPOSITION</h3>
+                <textarea placeholder="Single, clear, compelling message"></textarea>
+                <div class="subtitle">High-Level Concept:</div>
+                <textarea placeholder="List your X for Y analogy"></textarea>
+            </div>
+
+            <div class="section advantage">
+                <h3>UNFAIR ADVANTAGE</h3>
+                <textarea placeholder="Something that can't be easily copied or bought"></textarea>
+            </div>
+
+            <div class="section segments">
+                <h3>CUSTOMER SEGMENTS</h3>
+                <textarea placeholder="List your target customers"></textarea>
+                <div class="subtitle">Early Adopters:</div>
+                <textarea placeholder="List the characteristics of your ideal customers"></textarea>
+            </div>
+
+            <div class="bottom-row">
+                <div class="section costs">
+                    <h3>COST STRUCTURE</h3>
+                    <textarea placeholder="List your fixed and variable costs"></textarea>
+                </div>
+
+                <div class="section revenue">
+                    <h3>REVENUE STREAMS</h3>
+                    <textarea placeholder="List your sources of revenue"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function downloadPDF() {
+            const element = document.querySelector('.print-container');
+            
+            const options = {
+                filename: 'lean-canvas.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    logging: true,
+                    width: 1200,
+                    height: 675
+                },
+                jsPDF: {
+                    unit: 'px',
+                    format: [1200, 675],
+                    orientation: 'landscape'
+                }
+            };
+
+            const textareas = element.querySelectorAll('textarea');
+            const values = Array.from(textareas).map(ta => ta.value);
+            textareas.forEach(ta => ta.readOnly = true);
+
+            try {
+                await html2pdf().set(options).from(element).save();
+            } finally {
+                textareas.forEach((ta, i) => {
+                    ta.readOnly = false;
+                    ta.value = values[i];
+                });
+            }
+        }
+
+        function saveToLocalStorage() {
+            const textareas = document.querySelectorAll('textarea');
+            const values = Array.from(textareas).map(ta => ta.value);
+            localStorage.setItem('leanCanvasData', JSON.stringify(values));
+        }
+
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('leanCanvasData');
+            if (saved) {
+                const values = JSON.parse(saved);
+                const textareas = document.querySelectorAll('textarea');
+                textareas.forEach((ta, i) => {
+                    if (values[i]) ta.value = values[i];
+                });
+            }
+        }
+
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', saveToLocalStorage);
+        });
+
+        window.addEventListener('load', loadFromLocalStorage);
+    </script>
+</body>
+</html>
